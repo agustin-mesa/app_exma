@@ -1,0 +1,40 @@
+import React from "react";
+import styled from "styled-components";
+
+const Header = () => {
+  // Date
+
+  let newDate = new Date(),
+    day = newDate.getDate(),
+    month = newDate.getMonth(),
+    year = newDate.getFullYear();
+
+  return (
+    <ContainerHeader>
+      <a href="#">LOGO</a>
+      <span>${day + " de " + month + ", " + year}4 de Noviembre, 2021</span>
+      <a href="#">
+        <i className="far fa-user"></i>
+      </a>
+    </ContainerHeader>
+  );
+};
+
+const ContainerHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 20px 20px 10px 20px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+
+  i {
+    color: #ffffff;
+    font-size: 1.8em;
+  }
+`;
+
+export default Header;
