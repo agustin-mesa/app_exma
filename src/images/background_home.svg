@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="414px" height="807px" viewBox="0 0 414 807" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB" id="filter_1">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+      <feOffset dx="0" dy="8" />
+      <feGaussianBlur stdDeviation="8" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.28235295 0 0 0 0 0.32156864 0 0 0 0 0.76862746 0 0 0 0.49803922 0" />
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect0_dropShadow" />
+      <feBlend mode="normal" in="SourceGraphic" in2="effect0_dropShadow" result="shape" />
+    </filter>
+  </defs>
+  <g id="Group-3">
+    <path d="M0 0L414 0L414 807L0 807L0 0Z" id="Rectangle" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+    <path d="M0 0C83 -7.25609e-06 83 -7.25609e-06 83 -7.25609e-06C88.6223 0.0163933 94.2448 0.00351439 99.8669 0.0491943C102.321 0.0691316 104.774 0.122843 107.227 0.196838C109.127 0.254151 111.026 0.336316 112.924 0.443092C114.53 0.533454 116.134 0.648356 117.737 0.788193C119.15 0.911525 120.561 1.05942 121.969 1.23249C123.242 1.38889 124.511 1.56997 125.777 1.77645C133.439 3.02691 141.114 5.32348 147.531 9.82293C148.877 10.7663 150.155 11.7978 151.357 12.9182C153.153 14.5924 154.767 16.4578 156.177 18.4681C158.201 21.3558 159.798 24.5269 161.037 27.8249C163.491 34.3594 164.607 41.3358 165.212 48.2624C165.73 54.2 165.902 60.1737 165.951 66.1312C165.996 71.754 165.984 77.3771 166 83L166 184L0 184L0 0Z" transform="translate(0 623)" id="Rectangle-2" fill="#505BDA" fill-rule="evenodd" stroke="none" filter="url(#filter_1)" />
+    <path d="M0 0L178 0L178 175C87.5 175 87.5 175 87.5 175C81.0186 174.984 74.537 174.997 68.0558 174.951C65.4143 174.932 62.773 174.878 60.1326 174.804C58.1194 174.748 56.1068 174.666 54.0957 174.559C52.411 174.47 50.7273 174.355 49.046 174.215C47.5743 174.093 46.1045 173.946 44.6379 173.773C43.3206 173.618 42.006 173.437 40.6957 173.231C32.8963 172.004 25.0489 169.749 18.5024 165.192C17.8209 164.717 17.1553 164.219 16.5087 163.698C15.2316 162.669 14.0319 161.553 12.9144 160.352C11.2114 158.523 9.71368 156.507 8.42892 154.364C6.52281 151.184 5.08482 147.74 3.99896 144.2C3.0065 140.965 2.29481 137.646 1.7689 134.305C1.07072 129.869 0.679036 125.388 0.44104 120.905C0.205389 116.468 0.0803148 111.324 0.0489731 106.946C0.00256874 100.464 0.0163218 93.9821 -3.82475e-06 87.5L0 0Z" transform="translate(236 0)" id="Rectangle-2-Copy" fill="#505BDA" fill-rule="evenodd" stroke="none" filter="url(#filter_1)" />
+  </g>
+</svg>
