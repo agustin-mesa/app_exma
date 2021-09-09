@@ -23,6 +23,14 @@ const ResetPassword = () => {
   const [alertState, changeAlertState] = useState(false);
   const [alert, changeAlert] = useState({});
 
+  const mostrarAlerta = (boolean, classAlert, msg) => {
+    changeAlertState(boolean);
+    changeAlert({
+      classAlert: classAlert,
+      msg: msg,
+    });
+  };
+
   const handleChange = (e) => {
     changeCorreo(e.target.value);
   };
@@ -35,33 +43,34 @@ const ResetPassword = () => {
     // Se comprueba que el correo ingresado sea válido
     const expresionRegular = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
     if (!expresionRegular.test(correo)) {
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "error",
-        msg: "Por favor, ingrese un correo electrónico válido.",
-      });
+      mostrarAlerta(
+        true,
+        "error",
+        "Por favor, ingrese un correo electrónico válido."
+      );
+
       return;
     }
     // Se comprueba que estén los datos llenos
     if (correo === "") {
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "error",
-        msg: "Por favor, introduzca su correo electrónico.",
-      });
+      mostrarAlerta(
+        true,
+        "error",
+        "Por favor, introduzca su correo electrónico."
+      );
+
       return;
     }
 
     // Enviar link de reseteo de password
     try {
       await auth.sendPasswordResetEmail(correo);
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "exito",
-        msg: "Link enviado correctamente, verifica tu correo.",
-      });
+      mostrarAlerta(
+        true,
+        "exito",
+        "Link enviado correctamente, verifica tu correo."
+      );
     } catch (error) {
-      changeAlertState(true);
       let msg;
       console.log(error);
       switch (error.code) {
@@ -72,11 +81,7 @@ const ResetPassword = () => {
           msg = "Hubo un error al intentar enviar el link.";
           break;
       }
-
-      changeAlert({
-        classAlert: "error",
-        msg: msg,
-      });
+      mostrarAlerta(true, "error", msg);
     }
   };
 

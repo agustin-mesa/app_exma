@@ -29,6 +29,14 @@ const MiLista = () => {
   const [alert, changeAlert] = useState({});
   const [showMsgDeleted, changeShowMsgDeleted] = useState(false);
 
+  const mostrarAlerta = (boolean, classAlert, msg) => {
+    changeAlertState(boolean);
+    changeAlert({
+      classAlert: classAlert,
+      msg: msg,
+    });
+  };
+
   // Formatea de milisegundos a formato fecha, Ej.: 1 de enero, 2022
   const formatDate = (fecha) => {
     return format(fromUnixTime(fecha), "dd 'de' MMMM', ' yyyy", { locale: es });
@@ -113,12 +121,9 @@ const MiLista = () => {
         )}
 
         {showMsgDeleted &&
-          (changeAlertState(true),
-          changeAlert({
-            classAlert: "error",
-            msg: "Gasto eliminado",
-          }),
+          (mostrarAlerta(true, "error", "Gasto eliminado."),
           setTimeout(changeShowMsgDeleted(false), 3000))}
+
         <MsgAlert
           classAlert={alert.classAlert}
           msg={alert.msg}

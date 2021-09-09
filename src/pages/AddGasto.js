@@ -13,6 +13,7 @@ import useGetGastos from "../hooks/useGetGastos";
 //---------------- FIREBASE ----------------
 import addGasto from "../firebase/addGasto";
 import editarGasto from "../firebase/editarGasto";
+import firebase from "firebase/app";
 import { auth } from "../firebase/firebase";
 //---------------- STYLES ----------------
 import { Boton, Input } from "../components/elements/StyledElements";
@@ -36,6 +37,14 @@ const AddGasto = ({ gasto }) => {
   const history = useHistory();
   const { user } = useAuth();
 
+  const mostrarAlerta = (boolean, classAlert, msg) => {
+    changeAlertState(boolean);
+    changeAlert({
+      classAlert: classAlert,
+      msg: msg,
+    });
+  };
+
   useEffect(() => {
     // Se comprueba si hay algún gasto en el formulario
     // De ser así se establece su state
@@ -51,13 +60,13 @@ const AddGasto = ({ gasto }) => {
       }
     }
     if (!auth.currentUser.emailVerified) {
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "alerta",
-        msg: "Ve a verificar tu email para obtener más accesos.",
-      });
+      mostrarAlerta(
+        true,
+        "alerta",
+        "Ve a verificar tu email para obtener más accesos."
+      );
     }
-  }, [gasto, user.email, history]);
+  }, [gasto, user.email, history, auth.currentUser.emailVerified]);
 
   const handleChange = (e) => {
     if (e.target.name === "descripcion") {
@@ -65,13 +74,8 @@ const AddGasto = ({ gasto }) => {
       if (inputDescrip.length < 50) {
         changeInputDescrip(e.target.value);
       } else {
-        console.log(inputDescrip.length);
         changeInputDescrip(e.target.value.slice(0, 50));
-        changeAlertState(true);
-        changeAlert({
-          classAlert: "error",
-          msg: "Máximo caracteres alcanzado (50/50)",
-        });
+        mostrarAlerta(true, "error", "Máximo caracteres alcanzado (50/50)");
       }
     } else if (e.target.name === "valor") {
       // Anulo las letras para el input para poner el valor del gasto.
@@ -88,11 +92,11 @@ const AddGasto = ({ gasto }) => {
   */
   const verifiqueEmail = (e) => {
     e.preventDefault();
-    changeAlertState(true);
-    changeAlert({
-      classAlert: "alerta",
-      msg: "Ve a verificar tu email para obtener más accesos.",
-    });
+    mostrarAlerta(
+      true,
+      "alerta",
+      "Ve a verificar tu email para obtener más accesos."
+    );
   };
 
   const handleSubmit = (e) => {
@@ -116,11 +120,11 @@ const AddGasto = ({ gasto }) => {
               history.push("/gestion/mi-lista");
             })
             .catch((error) => {
-              changeAlertState(true);
-              changeAlert({
-                classAlert: "error",
-                msg: "Ocurrió un error al intentar editar",
-              });
+              mostrarAlerta(
+                true,
+                "error",
+                "Ocurrió un error al intentar editar"
+              );
             });
         } else {
           addGasto({
@@ -136,33 +140,21 @@ const AddGasto = ({ gasto }) => {
               changeCategoria("Comida");
               changeInputValor("");
               changeFecha(new Date());
-              changeAlertState(true);
-              changeAlert({
-                classAlert: "exito",
-                msg: "¡Gasto agregado correctamente!",
-              });
+              mostrarAlerta(true, "exito", "¡Gasto agregado correctamente!");
             })
             .catch((error) => {
-              changeAlertState(true);
-              changeAlert({
-                classAlert: "error",
-                msg: "Hubo un problema al intentar agregar el gasto.",
-              });
+              mostrarAlerta(
+                true,
+                "exito",
+                "Hubo un problema al intentar agregar el gasto."
+              );
             });
         }
       } else {
-        changeAlertState(true);
-        changeAlert({
-          classAlert: "error",
-          msg: "Valor ingresado incorrecto.",
-        });
+        mostrarAlerta(true, "error", "Valor ingresado incorrecto.");
       }
     } else {
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "error",
-        msg: "Por favor, rellene los campos.",
-      });
+      mostrarAlerta(true, "error", "Por favor, rellene los campos.");
     }
   };
 
@@ -234,7 +226,7 @@ const Formulario = styled.form`
     color: #444444;
     font-size: 16px;
     font-weight: 700;
-    margin: 20px 0 5px;
+    margin: 20px 0 0;
   }
   button {
     margin: 20px auto;
@@ -264,7 +256,6 @@ const ContainerInputs = styled.div`
       transition: all 0.2s ease;
     }
     input.input-valor {
-      position: relative;
       border: none;
       border-radius: 0;
       font-size: 2.5em;

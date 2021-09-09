@@ -20,6 +20,14 @@ const Header = () => {
   const [alertState, changeAlertState] = useState(false);
   const [alert, changeAlert] = useState({});
 
+  const mostrarAlerta = (boolean, classAlert, msg) => {
+    changeAlertState(boolean);
+    changeAlert({
+      classAlert: classAlert,
+      msg: msg,
+    });
+  };
+
   // true/false mostrar mensaje Cerrar sesión
   const handleShowMsg = () => {
     return changeShowMsg(!showMsg);
@@ -33,7 +41,6 @@ const Header = () => {
       await auth.signOut();
       history.push("/login");
     } catch (error) {
-      changeAlertState(true);
       let msg;
 
       switch (error.code) {
@@ -41,11 +48,7 @@ const Header = () => {
           msg = "Hubo un error al intentar cerrar sesión, inténtalo más tarde.";
           break;
       }
-
-      changeAlert({
-        classAlert: "error",
-        msg: msg,
-      });
+      mostrarAlerta(true, "error", msg);
     }
   };
 

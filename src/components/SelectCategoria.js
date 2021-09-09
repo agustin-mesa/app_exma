@@ -54,6 +54,7 @@ const ContainerSelect = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-top: 10px;
   padding: 15px 20px;
   width: 100%;
   border-radius: 50px;

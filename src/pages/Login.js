@@ -32,6 +32,14 @@ const Login = () => {
   // Loading luego de iniciar sesión
   const [loading, changeLoading] = useState(false);
 
+  const mostrarAlerta = (boolean, classAlert, msg) => {
+    changeAlertState(boolean);
+    changeAlert({
+      classAlert: classAlert,
+      msg: msg,
+    });
+  };
+
   const handleChange = (e) => {
     if (e.target.name === "email") {
       changeCorreo(e.target.value);
@@ -49,20 +57,16 @@ const Login = () => {
     // Se comprueba el correo ingresado mediante REGEX
     const expresionRegular = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
     if (!expresionRegular.test(correo)) {
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "error",
-        msg: "Por favor, ingrese un correo electrónico válido.",
-      });
+      mostrarAlerta(
+        true,
+        "error",
+        "Por favor, ingrese un correo electrónico válido."
+      );
       return;
     }
     // Se comprueba que estén los datos llenos
     if (correo === "" || password === "") {
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "error",
-        msg: "Por favor, llene todos los datos.",
-      });
+      mostrarAlerta(true, "error", "Por favor, llene todos los datos.");
       return;
     }
 
@@ -73,7 +77,6 @@ const Login = () => {
       history.push("/gestion/");
     } catch (error) {
       changeLoading(false);
-      changeAlertState(true);
       let msg;
 
       switch (error.code) {
@@ -87,14 +90,9 @@ const Login = () => {
           msg = "Hubo un error al intentar crear la cuenta.";
           break;
       }
-
-      changeAlert({
-        classAlert: "error",
-        msg: msg,
-      });
+      mostrarAlerta(true, "error", msg);
     }
   };
-
   // Login con Google
   const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -102,7 +100,6 @@ const Login = () => {
       await auth.signInWithPopup(provider);
       changeRedirect(true);
     } catch (error) {
-      changeAlertState(true);
       let msg;
 
       switch (error.code) {
@@ -110,14 +107,10 @@ const Login = () => {
           msg = "La cuenta existe con una credencial diferente.";
           break;
         default:
-          msg = "Hubo un error con la autenticación con Google.";
+          msg = "Hubo un error con la autenticación Google.";
           break;
       }
-
-      changeAlert({
-        classAlert: "error",
-        msg: msg,
-      });
+      mostrarAlerta(true, "error", msg);
     }
   };
 
@@ -126,9 +119,10 @@ const Login = () => {
     const provider = new firebase.auth.FacebookAuthProvider();
     try {
       await auth.signInWithPopup(provider);
+      if (!auth.currentUser.emailVerified)
+        auth.currentUser.sendEmailVerification();
       changeRedirect(true);
     } catch (error) {
-      changeAlertState(true);
       let msg;
 
       switch (error.code) {
@@ -139,11 +133,7 @@ const Login = () => {
           msg = "Hubo un error con la autenticación con Facebook.";
           break;
       }
-
-      changeAlert({
-        classAlert: "error",
-        msg: msg,
-      });
+      mostrarAlerta(true, "error", msg);
     }
   };
   return (

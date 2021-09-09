@@ -32,6 +32,14 @@ const Register = () => {
   // Loading luego de iniciar sesión
   const [loading, changeLoading] = useState(false);
 
+  const mostrarAlerta = (boolean, classAlert, msg) => {
+    changeAlertState(boolean);
+    changeAlert({
+      classAlert: classAlert,
+      msg: msg,
+    });
+  };
+
   const handleChange = (e) => {
     switch (e.target.name) {
       case "email":
@@ -58,37 +66,33 @@ const Register = () => {
     // Se comprueba que el correo ingresado sea válido
     const regexEmail = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
     if (!regexEmail.test(correo)) {
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "error",
-        msg: "Por favor, ingrese un correo electrónico válido.",
-      });
+      mostrarAlerta(
+        true,
+        "error",
+        "Por favor, ingrese un correo electrónico válido."
+      );
+
       return;
     }
     if (!regexPassword.test(password)) {
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "error",
-        msg: "La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, una minúscula y otra mayúscula. NO puede tener símbolos",
-      });
+      mostrarAlerta(
+        true,
+        "error",
+        "La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, una minúscula y otra mayúscula. NO puede tener símbolos"
+      );
+
       return;
     }
     // Se comprueba que estén los datos llenos
     if (correo === "" || password === "" || password2 === "") {
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "error",
-        msg: "Por favor, llene todos los datos.",
-      });
+      mostrarAlerta(true, "error", "Por favor, llene todos los datos.");
+
       return;
     }
     // Se comprueba que las contraseñas sean iguales
     if (password !== password2) {
-      changeAlertState(true);
-      changeAlert({
-        classAlert: "error",
-        msg: "Las contraseñas no son iguales.",
-      });
+      mostrarAlerta(true, "error", "Las contraseñas no son iguales.");
+
       return;
     }
 
@@ -101,7 +105,6 @@ const Register = () => {
       history.push("/gestion/");
     } catch (error) {
       changeLoading(false);
-      changeAlertState(true);
       let msg;
 
       switch (error.code) {
@@ -118,11 +121,7 @@ const Register = () => {
           msg = "Hubo un error al intentar crear la cuenta.";
           break;
       }
-
-      changeAlert({
-        classAlert: "error",
-        msg: msg,
-      });
+      mostrarAlerta(true, "error", msg);
     }
   };
 
