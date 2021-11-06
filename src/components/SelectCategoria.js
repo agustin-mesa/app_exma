@@ -6,16 +6,19 @@ import IconCategorias from "./IconCategorias";
 const SelectCategoria = ({ categoria, changeCategoria }) => {
   // Estado para mostrar el menú de selección
   const [showSelect, changeShowSelect] = useState(false);
-
   const categorias = [
     { id: "Comida" },
     { id: "Hogar" },
     { id: "Cuentas y Pagos" },
+    { id: "Venta" },
     { id: "Transporte" },
     { id: "Ropa" },
     { id: "Salud e Higiene" },
     { id: "Compras" },
     { id: "Diversión" },
+    { id: "Tecnología" },
+    { id: "Mascota" },
+    { id: "Otros" },
   ];
 
   const handleClick = (e) => {

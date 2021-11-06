@@ -13,7 +13,6 @@ import useGetGastos from "../hooks/useGetGastos";
 //---------------- FIREBASE ----------------
 import addGasto from "../firebase/addGasto";
 import editarGasto from "../firebase/editarGasto";
-import firebase from "firebase/app";
 import { auth } from "../firebase/firebase";
 //---------------- STYLES ----------------
 import { Boton, Input } from "../components/elements/StyledElements";
@@ -66,7 +65,7 @@ const AddGasto = ({ gasto }) => {
         "Ve a verificar tu email para obtener más accesos."
       );
     }
-  }, [gasto, user.email, history, auth.currentUser.emailVerified]);
+  }, [gasto, user.email, history]);
 
   const handleChange = (e) => {
     if (e.target.name === "descripcion") {
@@ -221,7 +220,7 @@ const Formulario = styled.form`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-
+  padding: 0 0 50px;
   span {
     color: #444444;
     font-size: 16px;

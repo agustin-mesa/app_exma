@@ -107,6 +107,7 @@ const List = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   width: 100%;
+  padding: 0 0 30px;
 `;
 
 const showElement = keyframes`

@@ -17,6 +17,7 @@ import {
   Input,
   ContainerInicio,
 } from "../components/elements/StyledElements";
+import styled from "styled-components";
 
 const Login = () => {
   // Para enviar al usuario
@@ -24,6 +25,8 @@ const Login = () => {
   // Datos a llenar por el usuario
   const [correo, changeCorreo] = useState("");
   const [password, changePassword] = useState("");
+  // Mostrar contraseña
+  const [showPass, changeShowPass] = useState(false);
   // Alertas
   const [alertState, changeAlertState] = useState(false);
   const [alert, changeAlert] = useState({});
@@ -31,6 +34,10 @@ const Login = () => {
   const [redirect, changeRedirect] = useState({});
   // Loading luego de iniciar sesión
   const [loading, changeLoading] = useState(false);
+
+  const showPassword = () => {
+    return changeShowPass(!showPass);
+  };
 
   const mostrarAlerta = (boolean, classAlert, msg) => {
     changeAlertState(boolean);
@@ -174,13 +181,23 @@ const Login = () => {
                 value={correo}
                 onChange={handleChange}
               />
-              <Input
-                type="password"
-                name="password"
-                placeholder="Ingrese su contraseña"
-                value={password}
-                onChange={handleChange}
-              />
+              <InputPassword>
+                <Input
+                  type={showPass ? "text" : "password"}
+                  name="password"
+                  placeholder="Ingrese su contraseña"
+                  value={password}
+                  onChange={handleChange}
+                />
+                {showPass ? (
+                  <i className="far fa-eye" onClick={() => showPassword()}></i>
+                ) : (
+                  <i
+                    className="far fa-eye-slash"
+                    onClick={() => showPassword()}
+                  ></i>
+                )}
+              </InputPassword>
               <Boton type="submit" onClick={handleSubmit}>
                 Iniciar sesión
               </Boton>
@@ -211,5 +228,27 @@ const Login = () => {
     </>
   );
 };
+
+const InputPassword = styled.div`
+  position: relative;
+  width: 100%;
+
+  i {
+    position: absolute;
+    right: 5px;
+    top: 12px;
+    bottom: 12px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #fff;
+    border-radius: 50px;
+    color: rgba(68, 68, 68, 0.3);
+    transition: all 0.2s ease;
+  }
+  i:hover {
+    color: #505bda;
+  }
+`;
 
 export default Login;

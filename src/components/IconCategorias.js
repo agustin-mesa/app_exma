@@ -6,10 +6,14 @@ import iconComida from "./../images/icon_comida.png";
 import iconHogar from "./../images/icon_hogar.png";
 import iconCuentas from "./../images/icon_cuentas.png";
 import iconCompras from "./../images/icon_compras.png";
+import iconVenta from "./../images/icon_venta.png";
 import iconTransporte from "./../images/icon_transporte.png";
 import iconSalud from "./../images/icon_salud.png";
 import iconRopa from "./../images/icon_ropa.png";
 import iconDiversion from "./../images/icon_diversion.png";
+import iconTecnologia from "./../images/icon_tecnologia.png";
+import iconMascota from "./../images/icon_mascota.png";
+import iconOtros from "./../images/icon_otros.png";
 
 const IconCategorias = ({ nombre }) => {
   /*
@@ -26,6 +30,8 @@ const IconCategorias = ({ nombre }) => {
       return <IconCategory src={iconCuentas} alt={nombre} />;
     case "Compras":
       return <IconCategory src={iconCompras} alt={nombre} />;
+    case "Venta":
+      return <IconCategory src={iconVenta} alt={nombre} />;
     case "Transporte":
       return <IconCategory src={iconTransporte} alt={nombre} />;
     case "Salud e Higiene":
@@ -34,6 +40,12 @@ const IconCategorias = ({ nombre }) => {
       return <IconCategory src={iconRopa} alt={nombre} />;
     case "Diversión":
       return <IconCategory src={iconDiversion} alt={nombre} />;
+    case "Tecnología":
+      return <IconCategory src={iconTecnologia} alt={nombre} />;
+    case "Mascota":
+      return <IconCategory src={iconMascota} alt={nombre} />;
+    case "Otros":
+      return <IconCategory src={iconOtros} alt={nombre} />;
     default:
       break;
   }

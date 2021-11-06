@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useHistory, Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import styled from "styled-components";
 //---------------- FIREBASE ----------------
 import { auth } from "../firebase/firebase";
 //---------------- IMAGES ----------------
@@ -25,12 +26,19 @@ const Register = () => {
   const [password, changePassword] = useState("");
   const [password2, changePassword2] = useState("");
   const [condicionPassword, changeCondicionPassword] = useState(false);
+  // Mostrar contraseña
+  const [showPass1, changeShowPass1] = useState(false);
+  const [showPass2, changeShowPass2] = useState(false);
   // Alertas
   const [alertState, changeAlertState] = useState(false);
   const [alert, changeAlert] = useState({});
   // Redireccionar luego de autenticar
   // Loading luego de iniciar sesión
   const [loading, changeLoading] = useState(false);
+
+  const showPassword = (password) => {
+    password === 1 ? changeShowPass1(!showPass1) : changeShowPass2(!showPass2);
+  };
 
   const mostrarAlerta = (boolean, classAlert, msg) => {
     changeAlertState(boolean);
@@ -150,7 +158,7 @@ const Register = () => {
                 ></LogoIcon>
               </NavLink>
             </HeaderAuth>
-            <form action="">
+            <Formulario action="">
               <h3>Crea una cuenta en EXMA</h3>
               <Input
                 type="email"
@@ -160,15 +168,25 @@ const Register = () => {
                 onChange={handleChange}
               />
 
-              <Input
-                type="password"
-                name="password"
-                placeholder="Crea una contraseña"
-                value={password}
-                onChange={handleChange}
-                onClick={() => activarCondicion("password")}
-                onBlur={() => onBlurPassword("password")}
-              />
+              <div>
+                <Input
+                  type={showPass1 ? "text" : "password"}
+                  name="password"
+                  placeholder="Crea una contraseña"
+                  value={password}
+                  onChange={handleChange}
+                  onClick={() => activarCondicion("password")}
+                  onBlur={() => onBlurPassword("password")}
+                />
+                {showPass1 ? (
+                  <i className="far fa-eye" onClick={() => showPassword(1)}></i>
+                ) : (
+                  <i
+                    className="far fa-eye-slash"
+                    onClick={() => showPassword(1)}
+                  ></i>
+                )}
+              </div>
               {condicionPassword && (
                 <p>
                   La contraseña debe tener al entre <b>8 y 16 caracteres</b>, al
@@ -176,18 +194,28 @@ const Register = () => {
                   menos <b>una mayúscula</b>. <b>NO símbolos</b>.
                 </p>
               )}
-              <Input
-                type="password"
-                name="password2"
-                placeholder="Confirmación"
-                value={password2}
-                onChange={handleChange}
-              />
+              <div>
+                <Input
+                  type={showPass2 ? "text" : "password"}
+                  name="password2"
+                  placeholder="Repita la contraseña"
+                  value={password2}
+                  onChange={handleChange}
+                />
+                {showPass2 ? (
+                  <i className="far fa-eye" onClick={() => showPassword(2)}></i>
+                ) : (
+                  <i
+                    className="far fa-eye-slash"
+                    onClick={() => showPassword(2)}
+                  ></i>
+                )}
+              </div>
 
               <Boton type="submit" onClick={handleSubmit}>
                 Registrarme
               </Boton>
-            </form>
+            </Formulario>
             <div className="actions">
               <span>
                 Ya tengo una cuenta.{" "}
@@ -210,5 +238,29 @@ const Register = () => {
     </>
   );
 };
+
+const Formulario = styled.form`
+  div {
+    position: relative;
+    width: 100%;
+
+    i {
+      position: absolute;
+      right: 5px;
+      top: 12px;
+      bottom: 12px;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background: #fff;
+      border-radius: 50px;
+      color: rgba(68, 68, 68, 0.3);
+      transition: all 0.2s ease;
+    }
+    i:hover {
+      color: #505bda;
+    }
+  }
+`;
 
 export default Register;

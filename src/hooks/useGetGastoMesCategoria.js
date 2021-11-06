@@ -21,11 +21,15 @@ const useGetGastosMesCategoria = () => {
         Comida: 0,
         Hogar: 0,
         "Cuentas y Pagos": 0,
+        Venta: 0,
         Transporte: 0,
         Ropa: 0,
         "Salud e Higiene": 0,
         Compras: 0,
         Diversión: 0,
+        Transporte: 0,
+        Mascota: 0,
+        Otros: 0,
       }
     );
     changeGastosCategoria(
