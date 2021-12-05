@@ -10,25 +10,36 @@ const BotonRegresar = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 50px;
-  color: #444;
+  color: var(--icono__02);
   font-size: 20px;
   background: transparent;
   border: none;
   outline: none;
 `;
 
+const slideDown = keyframes`
+    0%{
+      transform: translateY(-1.25rem);
+      opacity:0;
+    }
+    100%{
+      transform: translateY(0rem);
+      opacity:1;
+    }
+`;
+
 const hundir = keyframes`
   0%{
     transform: translateY(0);
-    box-shadow: 0px 8px 16px #505bda99;
+    box-shadow: 0px 8px 16px var(--shadow__02);
   }
   50%{
     transform: translateY(5px);
-    box-shadow: 0px 3px 10px #505bda99;
+    box-shadow: 0px 3px 10px var(--shadow__02);
   }
   100%{
     transform: translateY(0);
-    box-shadow: 0px 8px 16px #505bda99;
+    box-shadow: 0px 8px 16px var(--shadow__02);
   }
 `;
 const subir = keyframes`
@@ -37,7 +48,7 @@ const subir = keyframes`
   }
   50%{
     transform: translateY(-5px);
-    box-shadow: 0px 8px 16px #505bda99;
+    box-shadow: 0px 8px 16px var(--shadow__02);
   }
   100%{
     transform: translateY(0);
@@ -46,27 +57,27 @@ const subir = keyframes`
 
 const Boton = styled.button`
   border-radius: 50px;
-  background: #505bda;
-  color: #ffffff;
+  background: var(--bg__03);
+  color: var(--text__02);
   font-size: 14px;
   font-weight: 700;
   text-align: center;
   margin-top: 20px;
   padding: 12px 25px;
   outline: none;
-  box-shadow: 0px 8px 16px #505bda99;
+  box-shadow: 0px 8px 16px var(--shadow__02);
   border: none;
   transition: all 0.2s ease;
   user-select: none;
   &:focus {
-    background: #4852c4;
+    background: var(--bg__07);
     animation: ${hundir} 0.8s ease forwards;
   }
   &.action {
     box-shadow: none;
-    background: #fff;
-    color: #505bda;
-    border: 1px solid #505bda;
+    background: var(--bg__01);
+    color: var(--text__03);
+    border: 1px solid var(--border__02);
     box-shadow: none;
   }
   &.action:focus {
@@ -74,23 +85,59 @@ const Boton = styled.button`
   }
 `;
 
+const H3 = styled.h3`
+  color: var(--text__03);
+  font-size: 1.3em;
+  font-weight: 700;
+  text-align: center;
+  margin: 20px 0;
+`;
+
 const HeaderAuth = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin-top: 20px;
+  width: 100%;
+`;
 
-  img {
-    margin: 20px 0;
+const Photo = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50px;
+
+  i {
+    color: var(--icono__02);
+    font-size: 1.8em;
+  }
+
+  &.overlay__photo {
+    justify-content: center;
+    width: 50px;
+    margin: 0 15px 0 0;
+  }
+
+  &.perfil__photo {
+    background: var(--bg__03);
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    i {
+      color: var(--text__02);
+      font-size: 3.5em;
+    }
   }
 `;
 
 const LogoIcon = styled.img`
   width: 50px;
   &.grande {
-    margin: 50px 0 10px;
-    width: 150px;
+    margin: 30px 0 10px;
+    width: 120px;
   }
 `;
 
@@ -98,8 +145,8 @@ const IconCategory = styled.img`
   width: 40px;
   height: 40px;
   margin-right: 10px;
-  -webkit-filter: drop-shadow(0px 4px 4px #44444488);
-  filter: drop-shadow(0px 4px 4px #44444488);
+  -webkit-filter: drop-shadow(0px 4px 4px var(--shadow__03));
+  filter: drop-shadow(0px 4px 4px var(--shadow__03));
 `;
 
 const List = styled.div`
@@ -123,10 +170,10 @@ const ListElement = styled.div`
   align-items: center;
   margin: 5px 0;
   padding: 5px 5px;
-  color: #444444;
+  color: var(--text__01);
   font-size: 14px;
   text-align: left;
-  border-radius: 8px;
+  border-radius: 15px;
   transition: all 0.2s ease;
   animation: ${showElement} 0.5s ease forwards;
   user-select: none;
@@ -142,7 +189,7 @@ const ListElement = styled.div`
   }
 
   &:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--bg__09);
   }
   &:hover > .listElement__buttons {
     display: flex;
@@ -162,13 +209,13 @@ const ListElement = styled.div`
       background: none;
       border: none;
       outline: none;
-      color: rgba(68, 68, 68, 0.3);
+      color: var(--text__04);
       padding: 6px;
       margin: 0 1px;
       transition: all 0.2s ease;
     }
     button:hover {
-      color: rgba(68, 68, 68, 0.6);
+      color: var(--text__05);
     }
   }
 `;
@@ -178,153 +225,21 @@ const Input = styled.input`
   padding: 10px 15px;
   margin: 10px 0;
   border-radius: 50px;
-  border: solid 1px rgba(68, 68, 68, 0.3);
-  color: rgba(68, 68, 68, 0.9);
+  border: solid 1px var(--border__01);
+  color: var(--text__01);
+  background: var(--bg__01);
   font-size: 14px;
   font-weight: 600;
   transition: all 0.2s ease;
 
   &:focus {
     outline: none;
-    color: #505bda;
-    border: solid 1px #505bda;
+    color: var(--text__01);
+    border: solid 1px var(--border__02);
   }
   &::placeholder {
-    color: rgba(68, 68, 68, 0.5);
+    color: var(--text__05);
     font-weight: 600;
-  }
-`;
-
-const ContainerInicio = styled.div`
-  width: 100%;
-  height: 80vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  animation: ${showElement} 1s ease forwards;
-
-  &.withBackground {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    background-image: url(${(props) => props.img});
-    background-size: cover;
-  }
-
-  p {
-    color: #444444;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    text-align: left;
-    padding: 0 20px;
-    width: 100%;
-    animation: opac 0.5s ease forwards;
-  }
-  p.center {
-    margin: 0 0 5px;
-    text-align: center;
-  }
-  form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-
-    h3 {
-      color: #505bda;
-      font-size: 1.5em;
-      font-weight: 700;
-      text-align: center;
-      margin: 20px 0 15px;
-    }
-
-    @keyframes opac {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-
-    .auth__face-google {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      justify-content: center;
-      button {
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        justify-content: center;
-        font-size: 30px;
-        margin: 5px 10px;
-        width: 65px;
-        height: 65px;
-        border-radius: 50px;
-        color: #fff;
-        transition: all 0.2s ease;
-        border: none;
-      }
-      button:first-child {
-        background: #5072da;
-        box-shadow: 0px 8px 20px rgba(80, 114, 218, 0.5);
-      }
-      button:first-child:hover {
-        background: #4867c6;
-      }
-      button:last-child {
-        background: #da5050;
-        box-shadow: 0px 8px 20px rgba(218, 80, 80, 0.5);
-      }
-      button:last-child:hover {
-        background: #c44747;
-      }
-    }
-
-    .separado {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      justify-content: center;
-      width: 100%;
-      color: rgba(68, 68, 68, 0.2);
-      font-size: 14px;
-      font-weight: 600;
-      margin: 20px 0;
-      hr {
-        width: 100%;
-        margin: 0 10px;
-        border: 0.5px solid rgba(68, 68, 68, 0.2);
-      }
-    }
-  }
-
-  .actions {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-
-    span {
-      color: #444444;
-      font-size: 14px;
-      font-weight: 500;
-      text-align: center;
-      line-height: 22px;
-      margin: 20px 0 5px 0;
-    }
-    .actions__sesion {
-      color: #505bda;
-      font-size: 14px;
-      font-weight: 700;
-      text-decoration: none;
-    }
   }
 `;
 
@@ -348,7 +263,7 @@ const ListElementLoading = styled.div`
   transition: all 0.2s ease;
   div {
     position: relative;
-    background: rgba(220, 220, 220, 0.3);
+    background: var(--bg__09);
     border-radius: 12px;
     width: 40px;
     height: 40px;
@@ -365,7 +280,7 @@ const ListElementLoading = styled.div`
     background: linear-gradient(
       to right,
       transparent 0%,
-      #e8e8e8 50%,
+      var(--bg__10) 50%,
       transparent 100%
     );
     animation: ${load} 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
@@ -382,7 +297,6 @@ const ListElementLoading = styled.div`
 `;
 
 export {
-  ContainerInicio,
   LogoIcon,
   HeaderAuth,
   Input,
@@ -392,4 +306,8 @@ export {
   ListElement,
   List,
   ListElementLoading,
+  slideDown,
+  H3,
+  showElement,
+  Photo,
 };

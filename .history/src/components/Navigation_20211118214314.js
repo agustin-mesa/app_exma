@@ -1,0 +1,53 @@
+import React from "react";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+
+const Navigation = () => {
+  return (
+    <ContainerNavigation>
+      <NavLink to="/gestion" exact>
+        AÑADIR GASTO
+      </NavLink>
+      <NavLink to="/gestion/categorias">CATEGORÍAS</NavLink>
+      <NavLink to="/gestion/mi-lista">MI LISTA</NavLink>
+    </ContainerNavigation>
+  );
+};
+
+const ContainerNavigation = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  overflow-x: scroll;
+  white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  a {
+    padding: 5px 0;
+    color: var(--text__01);
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 8px;
+    border-bottom: 2px solid #fff;
+  }
+  .active {
+    border-bottom: 2px solid #505bda;
+  }
+
+  @media only screen and (max-width: 350px) {
+    & {
+      white-space: nowrap;
+      overflow: auto;
+      width: 100%;
+      position: relative;
+    }
+  }
+`;
+
+export default Navigation;

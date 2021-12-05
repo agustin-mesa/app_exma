@@ -58,14 +58,14 @@ const AddGasto = ({ gasto }) => {
         history.push("/gestion/mi-lista");
       }
     }
-    if (!auth.currentUser.emailVerified) {
+    if (!user.emailVerified) {
       mostrarAlerta(
         true,
         "alerta",
         "Ve a verificar tu email para obtener más accesos."
       );
     }
-  }, [gasto, user.email, history]);
+  }, [gasto, user.email, user.emailVerified, history]);
 
   const handleChange = (e) => {
     if (e.target.name === "descripcion") {
@@ -144,7 +144,7 @@ const AddGasto = ({ gasto }) => {
             .catch((error) => {
               mostrarAlerta(
                 true,
-                "exito",
+                "error",
                 "Hubo un problema al intentar agregar el gasto."
               );
             });
@@ -204,7 +204,6 @@ const AddGasto = ({ gasto }) => {
           )}
         </>
       )}
-
       <MsgAlert
         classAlert={alert.classAlert}
         msg={alert.msg}
@@ -222,8 +221,8 @@ const Formulario = styled.form`
   width: 100%;
   padding: 0 0 50px;
   span {
-    color: #444444;
-    font-size: 16px;
+    color: var(--text__01);
+    font-size: 15px;
     font-weight: 700;
     margin: 20px 0 0;
   }
@@ -251,7 +250,7 @@ const ContainerInputs = styled.div`
       font-size: 2em;
       font-weight: 500;
       margin: 0;
-      color: rgba(68, 68, 68, 0.5);
+      color: var(--text__06);
       transition: all 0.2s ease;
     }
     input.input-valor {
@@ -264,7 +263,7 @@ const ContainerInputs = styled.div`
     }
   }
   div:hover > span {
-    color: #505bda;
+    color: var(--text__03);
   }
 `;
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const Footer = () => {
@@ -7,9 +6,13 @@ const Footer = () => {
     <ContainerFooter>
       <div>
         Developed by{" "}
-        <NavLink to="https://byagustinmesa.web.app/" target="_BLANK">
+        <a
+          href="https://byagustinmesa.web.app"
+          target="_BLANK"
+          rel="noreferrer"
+        >
           Agustín Mesa
-        </NavLink>
+        </a>
       </div>
     </ContainerFooter>
   );
@@ -18,11 +21,11 @@ const Footer = () => {
 const ContainerFooter = styled.footer`
   text-align: center;
   margin: 15px 0;
-  color: #444444;
+  color: var(--text__01);
   font-size: 14px;
   font-weight: 500;
   a {
-    color: #505bda;
+    color: var(--text__03);
     font-size: 14px;
     font-weight: 700;
     text-decoration: none;

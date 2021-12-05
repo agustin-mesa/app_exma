@@ -30,15 +30,23 @@ const ContainerNavigation = styled.div`
 
   a {
     padding: 5px 0;
-    color: #444444;
+    color: var(--text__01);
     font-size: 14px;
     font-weight: 700;
     margin: 0 8px;
-    text-decoration: none;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid transparent;
   }
   .active {
-    border-bottom: 2px solid #505bda;
+    border-bottom: 2px solid var(--text__03);
+  }
+
+  @media only screen and (max-width: 350px) {
+    & {
+      white-space: nowrap;
+      overflow: auto;
+      width: 100%;
+      position: relative;
+    }
   }
 `;
 

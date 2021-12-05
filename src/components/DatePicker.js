@@ -60,6 +60,7 @@ const DatePicker = ({ fecha, changeFecha }) => {
         dayPickerProps={{
           months: meses,
           weekdaysShort: dias_semana_cortos,
+          showOutsideDays: true,
         }}
       />
     </ContainerInput>
@@ -85,26 +86,28 @@ const ContainerInput = styled.div`
     padding: 15px 20px;
     border-radius: 50px;
     transition: all 0.2s ease;
-    color: #505bda;
+    color: var(--text__03);
     font-size: 14px;
     font-weight: 700;
     border: none;
     outline: none;
-    background: rgba(80, 91, 218, 0.1);
+    background: var(--bg__04);
   }
 
   input:hover {
-    background: rgba(80, 91, 218, 0.2);
-
+    background: var(--bg__06);
     outline: none;
   }
   .DayPickerInput-Overlay {
     animation: ${slideDown} 0.3s ease forwards;
-    border-radius: 30px;
-    box-shadow: 0px 15px 20px rgb(0 0 0 / 20%);
+    border-radius: 15px;
+    box-shadow: 0px 15px 20px var(--shadow__01);
+    background: var(--bg__14);
+    color: var(--text__01);
+    border: 1px solid var(--border__01);
   }
   .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-    background-color: #505bda;
+    background-color: var(--bg__03);
   }
   .DayPicker-NavButton {
     margin-top: 2px;

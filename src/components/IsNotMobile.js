@@ -39,7 +39,7 @@ const ContainerIsNotMobile = styled.div`
   animation: ${aparecer} 1s ease forwards;
   p {
     b {
-      color: #505bda;
+      color: var(--text__03);
     }
     margin-top: 5px;
     width: 90%;

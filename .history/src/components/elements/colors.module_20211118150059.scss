@@ -1,0 +1,43 @@
+$white: #ffffff;
+$black: #444444;
+$blackOpac-03: rgba(68,68,68,0.3);
+$blackOpac-05: rgba(68,68,68,0.5);
+$blackOpac-09: rgba(68,68,68,0.9);
+$blackDm: #18181a;
+$darkblue: #1a2849;
+$violetblue: #505bda;
+$violetblueOpac-01: rgba(80, 91, 218, 0.1);
+$violet: #b063c5;
+$pink: #ffaac3;
+$green: #24cca7;
+$red: #cc2424;
+$yellow: #e8b60f;
+
+.mode__light{
+    $bg-white: $white;
+    $bg-violetBlueOpac-01: $violetblueOpac;
+    $text-01: $black;
+    $text-02: $violetblue;
+    $text-03: $blackOpac-03;
+}
+
+:export {
+  white: $white;
+  black: $black;
+  darkblue: $darkblue;
+  violetblue: $violetblue;
+  violetblueOpac: $violetblueOpac;
+  violet: $violet;
+  pink: $pink;
+  green: $green;
+  red: $red;
+  yellow: $yellow;
+  blackDm: $blackDm;
+
+  
+  bg-white: $white;
+    bg-violetBlueOpac-01: $violetblueOpac;
+    text-01: $black;
+    text-02: $violetblue;
+    text-03: $blackOpac-03;
+}

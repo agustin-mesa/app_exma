@@ -27,7 +27,7 @@ const useGetGastosMesCategoria = () => {
         "Salud e Higiene": 0,
         Compras: 0,
         Diversión: 0,
-        Transporte: 0,
+        Tecnología: 0,
         Mascota: 0,
         Otros: 0,
       }

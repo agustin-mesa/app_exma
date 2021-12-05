@@ -29,7 +29,7 @@ const LdsRing = styled.div`
   align-items: center;
   justify-content: center;
   animation: ${slideDown} 0.5s ease forwards;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--bg__11);
   z-index: 999;
 
   div {
@@ -39,10 +39,10 @@ const LdsRing = styled.div`
     width: 30px;
     height: 30px;
     margin: 8px;
-    border: 5px solid #505bda;
+    border: 5px solid var(--border__02);
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #505bda transparent transparent transparent;
+    border-color: var(--border__02) transparent transparent transparent;
   }
   div:nth-child(1) {
     animation-delay: -0.45s;

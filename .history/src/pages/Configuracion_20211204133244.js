@@ -1,0 +1,397 @@
+import React, { useState } from "react";
+import styled from "styled-components";
+
+//---------------- STYLES ----------------
+import { Input } from "../components/elements/StyledElements";
+//---------------- CONTEXT ----------------
+import { useAuth } from "../context/AuthContext";
+//---------------- COMPONENTS ----------------
+import BtnRegresar from "../components/BtnRegresar";
+import Perfil from "../components/Perfil";
+import InputPassword from "../components/InputPassword";
+import MsgAlert from "../components/MsgAlert";
+//---------------- FIREBASE ----------------
+import { auth } from "../firebase/firebase";
+
+const Configuracion = () => {
+  const { user } = useAuth();
+
+  const [showInput, changeShowInput] = useState("");
+
+  const [inputNuevoNombre, changeNuevoNombre] = useState("");
+  const [inputCorreoAnterior, changeCorreoAnterior] = useState("");
+  const [inputCorreoNuevo, changeCorreoNuevo] = useState("");
+  const [inputNewPass, changeInputNewPass] = useState("");
+  const [inputNewPassRepite, changeInputNewPassRepite] = useState("");
+  // Mostrar contraseña
+  const [showPass1, changeShowPass1] = useState(false);
+  const [showPass2, changeShowPass2] = useState(false);
+
+  // Alertas
+  const [alertState, changeAlertState] = useState(false);
+  const [alert, changeAlert] = useState({});
+  const mostrarAlerta = (boolean, classAlert, msg) => {
+    changeAlertState(boolean);
+    changeAlert({
+      classAlert: classAlert,
+      msg: msg,
+    });
+  };
+
+  const handleChange = (e) => {
+    let inputName = e.target.name;
+    switch (inputName) {
+      case "nuevoNombre":
+        // Máximo de caracteres para el nombre del gasto: -> 30 <-
+        if (inputNuevoNombre.length < 20) {
+          changeNuevoNombre(e.target.value);
+        } else {
+          changeNuevoNombre(e.target.value.slice(0, 20));
+          mostrarAlerta(true, "error", "Máximo caracteres alcanzado (20/20)");
+        }
+        break;
+      case "emailAnterior":
+        changeCorreoAnterior(e.target.value);
+        break;
+      case "emailNuevo":
+        changeCorreoNuevo(e.target.value);
+        break;
+      case "password":
+        changeInputNewPass(e.target.value);
+        break;
+      case "repetirPassword":
+        changeInputNewPassRepite(e.target.value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleInputChange = (e) => {
+    let inputAEditar = e.target.name;
+    switch (inputAEditar) {
+      case "btnEditarNombre":
+        changeShowInput(inputAEditar);
+        break;
+      case "btnEditarEmail":
+        changeShowInput(inputAEditar);
+        break;
+      case "btnEditarPass":
+        changeShowInput(inputAEditar);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const updateNombre = () => {
+    if (inputNuevoNombre !== "") {
+      user
+        .updateProfile({
+          displayName: inputNuevoNombre,
+        })
+        .then(() => {
+          mostrarAlerta(true, "exito", "¡Nombre cambiado exitosamente!");
+          changeNuevoNombre("");
+        })
+        .catch(() => {
+          mostrarAlerta(
+            true,
+            "error",
+            "Ocurrió un error al intentar cambiar su nombre. Inténtelo más tarde"
+          );
+        });
+    } else {
+      mostrarAlerta(true, "error", "Está vacío...");
+    }
+  };
+
+  const updateEmail = () => {
+    // Se comprueba que estén los datos llenos
+    if (inputCorreoAnterior === "" || inputCorreoNuevo === "") {
+      mostrarAlerta(true, "error", "Por favor, llene ambos campos.");
+      return;
+    }
+
+    if (inputCorreoAnterior === user.email) {
+      // Se comprueba que el correo ingresado sea válido
+      const regexEmail = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
+      if (
+        !regexEmail.test(inputCorreoAnterior) &&
+        !regexEmail.test(inputCorreoNuevo)
+      ) {
+        mostrarAlerta(
+          true,
+          "error",
+          "Por favor, ingrese un correo electrónico válido."
+        );
+        return;
+      }
+
+      user
+        .updateEmail(inputCorreoNuevo)
+        .then(() => {
+          mostrarAlerta(true, "exito", "¡Correo cambiado exitosamente!");
+          changeCorreoAnterior("");
+          changeCorreoNuevo("");
+        })
+        .catch((error) => {
+          let msg;
+          switch (error.code) {
+            case "auth/email-already-in-use":
+              msg = "El correo ingresado ya está en uso.";
+              break;
+          }
+          mostrarAlerta(true, "error", msg);
+        });
+    } else {
+      mostrarAlerta(true, "error", "El correo anterior no coincide.");
+      return;
+    }
+  };
+
+  const updatePassword = () => {
+    // Se comprueba que las contraseñas sean iguales
+    if (inputNewPass !== inputNewPassRepite) {
+      mostrarAlerta(true, "error", "Las contraseñas no son iguales.");
+      return;
+    }
+    if (inputNewPass === "" || inputNewPassRepite === "") {
+      mostrarAlerta(true, "error", "Por favor, llene todos los datos.");
+      return;
+    }
+    const regexPassword = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/;
+    if (
+      !regexPassword.test(inputNewPass) &&
+      !regexPassword.test(inputNewPassRepite)
+    ) {
+      mostrarAlerta(
+        true,
+        "error",
+        "La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, una minúscula y otra mayúscula. NO puede tener símbolos"
+      );
+
+      return;
+    }
+    user
+      .updatePassword(inputNewPass)
+      .then(() => {
+        mostrarAlerta(true, "exito", "¡Contraseña cambiada exitosamente!");
+        changeInputNewPass("");
+        changeInputNewPassRepite("");
+      })
+      .catch((error) => {
+        console.log(error.code);
+        mostrarAlerta(
+          true,
+          "error",
+          "Ocurrió un error al intentar cambiar la contraseña."
+        );
+      });
+  };
+
+  const uploadProfileImg = () => {};
+
+  return (
+    <>
+      <BtnRegresar className="margin" titulo="Configuración" />
+      <ContainerSettings>
+        <Perfil />
+        <ListOptions>
+          <li>
+            <span>Foto de perfil</span>
+            <span></span>
+            <input
+              type="file"
+              name="btnEditarNombre"
+              onClick={(e) => handleInputChange(e)}
+            />
+            <span className="btn-editar">Editar</span>
+          </li>
+          <li>
+            <span>Nombre</span>
+            <span>{user.displayName}</span>
+            {showInput !== "btnEditarNombre" ? (
+              <button
+                className="btn-editar"
+                name="btnEditarNombre"
+                onClick={(e) => handleInputChange(e)}
+              >
+                Editar
+              </button>
+            ) : (
+              <i
+                className="fas fa-times"
+                onClick={() => changeShowInput("")}
+              ></i>
+            )}
+          </li>
+          {showInput === "btnEditarNombre" && (
+            <div>
+              <Input
+                type="text"
+                name="nuevoNombre"
+                placeholder="Nuevo nombre"
+                value={inputNuevoNombre}
+                onChange={handleChange}
+                autoComplete="off"
+              />
+              <button className="btn-editar" onClick={() => updateNombre()}>
+                Editar
+              </button>
+            </div>
+          )}
+
+          <li>
+            <span>Email</span>
+            <span>{user.email}</span>
+            {user.providerData[0].providerId === "password" ? (
+              <>
+                {showInput !== "btnEditarEmail" ? (
+                  <button
+                    className="btn-editar"
+                    name="btnEditarEmail"
+                    onClick={(e) => handleInputChange(e)}
+                  >
+                    Editar
+                  </button>
+                ) : (
+                  <i
+                    className="fas fa-times"
+                    onClick={() => changeShowInput("")}
+                  ></i>
+                )}
+              </>
+            ) : user.providerData[0].providerId === "google.com" ? (
+              <i className="fab fa-google"></i>
+            ) : (
+              <i className="fab fa-facebook-f"></i>
+            )}
+          </li>
+          {showInput === "btnEditarEmail" && (
+            <div>
+              <Input
+                type="text"
+                name="emailAnterior"
+                placeholder="Correo electrónico anterior"
+                value={inputCorreoAnterior}
+                onChange={handleChange}
+              />
+              <Input
+                type="text"
+                name="emailNuevo"
+                placeholder="Nuevo correo electrónico"
+                value={inputCorreoNuevo}
+                onChange={handleChange}
+              />
+              <button className="btn-editar" onClick={() => updateEmail()}>
+                Editar
+              </button>
+            </div>
+          )}
+          {user.providerData[0].providerId === "password" && (
+            <>
+              <li>
+                <span>Contraseña</span>
+                <span>*********</span>
+                {showInput !== "btnEditarPass" ? (
+                  <button
+                    className="btn-editar"
+                    name="btnEditarPass"
+                    onClick={(e) => handleInputChange(e)}
+                  >
+                    Editar
+                  </button>
+                ) : (
+                  <i
+                    className="fas fa-times"
+                    onClick={() => changeShowInput("")}
+                  ></i>
+                )}
+              </li>
+            </>
+          )}
+          {showInput === "btnEditarPass" && (
+            <div>
+              <InputPassword
+                name="password"
+                placeholder="Nueva contraseña"
+                password={inputNewPass}
+                changePassword={changeInputNewPass}
+              />
+              <InputPassword
+                name="repetirPassword"
+                placeholder="Repetir nueva contraseña"
+                password={inputNewPassRepite}
+                changePassword={changeInputNewPassRepite}
+              />
+              <button className="btn-editar" onClick={() => updatePassword()}>
+                Editar
+              </button>
+            </div>
+          )}
+        </ListOptions>
+      </ContainerSettings>
+      <MsgAlert
+        classAlert={alert.classAlert}
+        msg={alert.msg}
+        alertState={alertState}
+        changeAlertState={changeAlertState}
+      />
+    </>
+  );
+};
+const ContainerSettings = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const ListOptions = styled.ul`
+  list-style: none;
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-radius: 15px;
+    transition: all 0.2s ease;
+  }
+  li span {
+    color: var(--text__01);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+    width: 120px;
+  }
+  li span:nth-child(2) {
+    font-size: 12px;
+    font-weight: 500;
+    flex: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 15px 0 0;
+    color: var(--text__05);
+  }
+  button.btn-editar {
+    color: var(--text__03);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  i {
+    font-size: 1em;
+    color: var(--text__01);
+  }
+  div {
+    padding: 0 20px 15px;
+    border-bottom: 1px solid var(--border__03);
+  }
+  div.pass {
+    padding: 0;
+    border: none;
+  }
+`;
+
+export default Configuracion;

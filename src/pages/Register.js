@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { NavLink, useHistory, Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
+import ReCAPTCHA from "react-google-recaptcha";
+
 //---------------- FIREBASE ----------------
 import { auth } from "../firebase/firebase";
 //---------------- IMAGES ----------------
 import logo from "../images/logo.png";
 //---------------- COMPONENTS ----------------
 import MsgAlert from "../components/MsgAlert";
+import InputPassword from "../components/InputPassword";
 import LoadSpinner from "../components/LoadSpinner";
 //---------------- STYLES ----------------
 import {
@@ -15,20 +18,19 @@ import {
   LogoIcon,
   HeaderAuth,
   Input,
-  ContainerInicio,
+  showElement,
+  H3,
 } from "../components/elements/StyledElements";
 
 const Register = () => {
   // Para enviar al usuario
   const history = useHistory();
   // Datos a llenar por el usuario
+  const [nombre, changeNombre] = useState("");
   const [correo, changeCorreo] = useState("");
   const [password, changePassword] = useState("");
   const [password2, changePassword2] = useState("");
   const [condicionPassword, changeCondicionPassword] = useState(false);
-  // Mostrar contraseña
-  const [showPass1, changeShowPass1] = useState(false);
-  const [showPass2, changeShowPass2] = useState(false);
   // Alertas
   const [alertState, changeAlertState] = useState(false);
   const [alert, changeAlert] = useState({});
@@ -36,8 +38,11 @@ const Register = () => {
   // Loading luego de iniciar sesión
   const [loading, changeLoading] = useState(false);
 
-  const showPassword = (password) => {
-    password === 1 ? changeShowPass1(!showPass1) : changeShowPass2(!showPass2);
+  //  ReCaptcha
+  const captcha = useRef(null);
+  const onChange = () => {
+    if (captcha.current.getValue()) {
+    }
   };
 
   const mostrarAlerta = (boolean, classAlert, msg) => {
@@ -50,6 +55,9 @@ const Register = () => {
 
   const handleChange = (e) => {
     switch (e.target.name) {
+      case "nombre":
+        changeNombre(e.target.value);
+        break;
       case "email":
         changeCorreo(e.target.value);
         break;
@@ -92,7 +100,7 @@ const Register = () => {
       return;
     }
     // Se comprueba que estén los datos llenos
-    if (correo === "" || password === "" || password2 === "") {
+    if (nombre === "" || correo === "" || password === "" || password2 === "") {
       mostrarAlerta(true, "error", "Por favor, llene todos los datos.");
 
       return;
@@ -103,11 +111,21 @@ const Register = () => {
 
       return;
     }
+    if (captcha.current.getValue()) {
+      captcha.current.reset();
+    } else {
+      mostrarAlerta(true, "error", "Por favor, acepte el captcha.");
+      return;
+    }
 
     // Se crea un usuario con Correo y Contraseña
     try {
       changeLoading(true);
-      await auth.createUserWithEmailAndPassword(correo, password);
+      await auth
+        .createUserWithEmailAndPassword(correo, password)
+        .then((result) => {
+          return result.user.updateProfile({ displayName: nombre });
+        });
       // Enviar email de verificación para cuentas creadas con Correo y Contraseña
       auth.currentUser.sendEmailVerification();
       history.push("/gestion/");
@@ -148,7 +166,7 @@ const Register = () => {
       {auth.currentUser === null ? (
         <>
           {loading && <LoadSpinner />}
-          <ContainerInicio>
+          <ContainerRegister>
             <HeaderAuth>
               <NavLink to="/" exact>
                 <LogoIcon
@@ -159,7 +177,14 @@ const Register = () => {
               </NavLink>
             </HeaderAuth>
             <Formulario action="">
-              <h3>Crea una cuenta en EXMA</h3>
+              <H3>Crea una cuenta</H3>
+              <Input
+                type="text"
+                name="nombre"
+                placeholder="Nombre y apellido (o apodo)"
+                value={nombre}
+                onChange={handleChange}
+              />
               <Input
                 type="email"
                 name="email"
@@ -168,50 +193,37 @@ const Register = () => {
                 onChange={handleChange}
               />
 
-              <div>
-                <Input
-                  type={showPass1 ? "text" : "password"}
+              <div
+                onClick={() => activarCondicion("password")}
+                onBlur={() => onBlurPassword("password")}
+              >
+                <InputPassword
                   name="password"
                   placeholder="Crea una contraseña"
-                  value={password}
-                  onChange={handleChange}
-                  onClick={() => activarCondicion("password")}
-                  onBlur={() => onBlurPassword("password")}
+                  password={password}
+                  changePassword={changePassword}
                 />
-                {showPass1 ? (
-                  <i className="far fa-eye" onClick={() => showPassword(1)}></i>
-                ) : (
-                  <i
-                    className="far fa-eye-slash"
-                    onClick={() => showPassword(1)}
-                  ></i>
-                )}
               </div>
               {condicionPassword && (
                 <p>
-                  La contraseña debe tener al entre <b>8 y 16 caracteres</b>, al
-                  menos <b>un dígito</b>, al menos <b>una minúscula</b> y al
-                  menos <b>una mayúscula</b>. <b>NO símbolos</b>.
+                  La contraseña debe tener entre <b>8 y 16 caracteres</b>, al
+                  menos <b>un número</b>, <b>una minúscula</b> y{" "}
+                  <b>una mayúscula</b>. <b>NO símbolos</b>.
                 </p>
               )}
-              <div>
-                <Input
-                  type={showPass2 ? "text" : "password"}
-                  name="password2"
-                  placeholder="Repita la contraseña"
-                  value={password2}
-                  onChange={handleChange}
-                />
-                {showPass2 ? (
-                  <i className="far fa-eye" onClick={() => showPassword(2)}></i>
-                ) : (
-                  <i
-                    className="far fa-eye-slash"
-                    onClick={() => showPassword(2)}
-                  ></i>
-                )}
-              </div>
+              <InputPassword
+                name="password2"
+                placeholder="Repetir contraseña"
+                password={password2}
+                changePassword={changePassword2}
+              />
 
+              <ReCAPTCHA
+                ref={captcha}
+                sitekey="6LcLPBsdAAAAAORBh-G8etHEMrJFw2PR3RYM4w5H"
+                onChange={onChange}
+                className="recaptcha"
+              />
               <Boton type="submit" onClick={handleSubmit}>
                 Registrarme
               </Boton>
@@ -230,7 +242,7 @@ const Register = () => {
               alertState={alertState}
               changeAlertState={changeAlertState}
             />
-          </ContainerInicio>
+          </ContainerRegister>
         </>
       ) : (
         <Redirect to="/gestion" />
@@ -239,27 +251,64 @@ const Register = () => {
   );
 };
 
-const Formulario = styled.form`
-  div {
-    position: relative;
-    width: 100%;
+const ContainerRegister = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 0 50px;
+  animation: ${showElement} 1s ease forwards;
 
-    i {
-      position: absolute;
-      right: 5px;
-      top: 12px;
-      bottom: 12px;
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      background: #fff;
-      border-radius: 50px;
-      color: rgba(68, 68, 68, 0.3);
-      transition: all 0.2s ease;
-    }
-    i:hover {
-      color: #505bda;
-    }
+  p {
+    color: var(--text__01);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    text-align: left;
+    padding: 0 20px;
+    width: 100%;
+    animation: opac 0.5s ease forwards;
+  }
+  div {
+    width: 100%;
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .actions span {
+    color: var(--text__01);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 22px;
+    margin: 20px 0 5px 0;
+  }
+  .actions .actions__sesion {
+    color: var(--text__03);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+`;
+
+const Formulario = styled.form`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+
+  .recaptcha {
+    margin: 20px 0 0;
+  }
+  .recaptcha div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 

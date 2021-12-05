@@ -136,7 +136,7 @@ const MiLista = () => {
 };
 
 const Fecha = styled.div`
-  color: #444444;
+  color: var(--text__01);
   font-size: 16px;
   font-weight: 700;
   margin: 15px 0 8px;
@@ -151,7 +151,7 @@ const ContainerMore = styled.div`
   user-select: none;
   button {
     padding: 5px 10px;
-    color: #505bda;
+    color: var(--text__03);
     font-size: 16px;
     font-weight: 700;
     background: none;
@@ -167,7 +167,7 @@ const ContainerSubtitle = styled.div`
   margin: 5px 0;
   user-select: none;
   p {
-    color: rgba(68, 68, 68, 0.6);
+    color: var(--text__04);
     font-size: 14px;
     font-weight: 500;
     padding: 5px 10px;

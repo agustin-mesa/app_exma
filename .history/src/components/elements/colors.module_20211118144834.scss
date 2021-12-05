@@ -1,0 +1,25 @@
+$white: #ffffff;
+$black: #444444;
+$darkblue: #1a2849;
+$violetblue: #505bda;
+$violetblueOpac: rgba(80, 91, 218, 0.1);
+$violet: #b063c5;
+$pink: #ffaac3;
+$green: #24cca7;
+$red: #cc2424;
+$yellow: #e8b60f;
+$blackDm: #18181a;
+
+:export {
+  white: $white;
+  black: $black;
+  darkblue: $darkblue;
+  violetblue: $violetblue;
+  violetblueOpac: $violetblueOpac;
+  violet: $violet;
+  pink: $pink;
+  green: $green;
+  red: $red;
+  yellow: $yellow;
+  blackDm: $blackDm;
+}

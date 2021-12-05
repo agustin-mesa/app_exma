@@ -9,13 +9,15 @@ import { auth } from "../firebase/firebase";
 //---------------- COMPONENTS ----------------
 import LoadSpinner from "../components/LoadSpinner";
 import MsgAlert from "../components/MsgAlert";
+import InputPassword from "../components/InputPassword";
 //---------------- STYLES ----------------
 import {
   Boton,
   LogoIcon,
   HeaderAuth,
   Input,
-  ContainerInicio,
+  showElement,
+  H3,
 } from "../components/elements/StyledElements";
 import styled from "styled-components";
 
@@ -25,8 +27,6 @@ const Login = () => {
   // Datos a llenar por el usuario
   const [correo, changeCorreo] = useState("");
   const [password, changePassword] = useState("");
-  // Mostrar contraseña
-  const [showPass, changeShowPass] = useState(false);
   // Alertas
   const [alertState, changeAlertState] = useState(false);
   const [alert, changeAlert] = useState({});
@@ -34,10 +34,6 @@ const Login = () => {
   const [redirect, changeRedirect] = useState({});
   // Loading luego de iniciar sesión
   const [loading, changeLoading] = useState(false);
-
-  const showPassword = () => {
-    return changeShowPass(!showPass);
-  };
 
   const mostrarAlerta = (boolean, classAlert, msg) => {
     changeAlertState(boolean);
@@ -62,8 +58,8 @@ const Login = () => {
     changeAlert({});
 
     // Se comprueba el correo ingresado mediante REGEX
-    const expresionRegular = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
-    if (!expresionRegular.test(correo)) {
+    const regexCorreo = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
+    if (!regexCorreo.test(correo)) {
       mostrarAlerta(
         true,
         "error",
@@ -143,6 +139,7 @@ const Login = () => {
       mostrarAlerta(true, "error", msg);
     }
   };
+
   return (
     <>
       {auth.currentUser === null || !redirect ? (
@@ -151,7 +148,7 @@ const Login = () => {
             <title>Iniciar sesión</title>
           </Helmet>
           {loading && <LoadSpinner />}
-          <ContainerInicio>
+          <ContainerLogin>
             <HeaderAuth>
               <NavLink to="/" exact>
                 <LogoIcon
@@ -162,7 +159,7 @@ const Login = () => {
               </NavLink>
             </HeaderAuth>
             <form action="" onSubmit={handleSubmit}>
-              <h3>Iniciar sesión</h3>
+              <H3>Iniciar sesión</H3>
               <div className="auth__face-google">
                 <button onClick={() => signInWithFacebook()}>
                   <i className="fab fa-facebook-f"></i>
@@ -181,23 +178,12 @@ const Login = () => {
                 value={correo}
                 onChange={handleChange}
               />
-              <InputPassword>
-                <Input
-                  type={showPass ? "text" : "password"}
-                  name="password"
-                  placeholder="Ingrese su contraseña"
-                  value={password}
-                  onChange={handleChange}
-                />
-                {showPass ? (
-                  <i className="far fa-eye" onClick={() => showPassword()}></i>
-                ) : (
-                  <i
-                    className="far fa-eye-slash"
-                    onClick={() => showPassword()}
-                  ></i>
-                )}
-              </InputPassword>
+              <InputPassword
+                name="password"
+                placeholder="Ingrese su contraseña"
+                password={password}
+                changePassword={changePassword}
+              />
               <Boton type="submit" onClick={handleSubmit}>
                 Iniciar sesión
               </Boton>
@@ -220,7 +206,7 @@ const Login = () => {
               alertState={alertState}
               changeAlertState={changeAlertState}
             />
-          </ContainerInicio>
+          </ContainerLogin>
         </>
       ) : (
         <Redirect to="/gestion/" />
@@ -229,25 +215,118 @@ const Login = () => {
   );
 };
 
-const InputPassword = styled.div`
-  position: relative;
+const ContainerLogin = styled.div`
   width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  animation: ${showElement} 1s ease forwards;
 
-  i {
-    position: absolute;
-    right: 5px;
-    top: 12px;
-    bottom: 12px;
+  p {
+    color: var(--text__01);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    text-align: left;
+    padding: 0 20px;
+    width: 100%;
+    animation: opac 0.5s ease forwards;
+  }
+  p.center {
+    margin: 0 0 5px;
+    text-align: center;
+  }
+  form {
     display: flex;
     align-items: center;
-    padding: 10px;
-    background: #fff;
-    border-radius: 50px;
-    color: rgba(68, 68, 68, 0.3);
-    transition: all 0.2s ease;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+    @keyframes opac {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .auth__face-google {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: center;
+      button {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: center;
+        font-size: 30px;
+        margin: 5px 10px;
+        width: 65px;
+        height: 65px;
+        border-radius: 50px;
+        color: var(--text__02);
+        transition: all 0.2s ease;
+        border: none;
+      }
+      button:first-child {
+        background: var(--bg__03);
+        box-shadow: 0px 8px 20px var(--shadow__04);
+      }
+      button:first-child:hover {
+        background: var(--bg__07);
+      }
+      button:last-child {
+        background: var(--bg__12);
+        box-shadow: 0px 8px 20px var(--shadow__05);
+      }
+      button:last-child:hover {
+        background: var(--bg__13);
+      }
+    }
+
+    .separado {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      color: var(--text__04);
+      font-size: 14px;
+      font-weight: 600;
+      margin: 20px 0;
+      hr {
+        width: 100%;
+        margin: 0 10px;
+        border: 0.5px solid var(--border__01);
+      }
+    }
   }
-  i:hover {
-    color: #505bda;
+
+  .actions {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    span {
+      color: var(--text__01);
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      line-height: 22px;
+      margin: 20px 0 5px 0;
+    }
+    .actions__sesion {
+      color: var(--text__03);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
   }
 `;
 

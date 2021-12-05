@@ -1,0 +1,48 @@
+$white: #ffffff;
+$black: #444444;
+$blackOpac-01: rgba(0, 0, 0, 0.1);
+$blackOpac-03: rgba(68, 68, 68, 0.2);
+$blackOpac-05: rgba(68, 68, 68, 0.5);
+$blackOpac-09: rgba(68, 68, 68, 0.9);
+$blackDm: #18181a;
+$darkblue: #1a2849;
+$violetblue: #505bda;
+$violetblueOpac-01: rgba(80, 91, 218, 0.1);
+$violetblueOpac-06: rgba(78, 90, 218, 0.6);
+$violet: #b063c5;
+$pink: #ffaac3;
+$green: #24cca7;
+$red: #cc2424;
+$yellow: #e8b60f;
+
+.mode__light {
+  $bg-white: $white;
+  $bg-violetBlueOpac-01: $violetblueOpac-01;
+  $text-01: $black;
+  $text-02: $violetblue;
+  $text-03: $blackOpac-03;
+}
+
+:export {
+  white: $white;
+  black: $black;
+  darkblue: $darkblue;
+  violetblue: $violetblue;
+  violetblueOpac__01: $violetblueOpac-01;
+  violetblueOpac__06: $violetblueOpac-06;
+  violet: $violet;
+  pink: $pink;
+  green: $green;
+  red: $red;
+  yellow: $yellow;
+  blackDm: $blackDm;
+
+  bg__white: $white;
+  bg__blackOpac_01: $blackOpac-01;
+  bg__violetblue: $violetblue;
+  bg__violetblueOpac_01: $violetblueOpac-01;
+  text__black: $black;
+  text__violetblue: $violetblue;
+  text__blackOpac_03: $blackOpac-03;
+  icono__01: $white;
+}

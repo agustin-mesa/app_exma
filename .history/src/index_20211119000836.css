@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,800&display=swap");
+
+:root {
+  --bg__01: #f0f2f5;
+  --bg__02: rgba(0, 0, 0, 0.2);
+  --bg__03: #505bda;
+  --bg__04: rgba(80, 91, 218, 0.1);
+  --bg__05: rgba(78, 90, 218, 0.6);
+  --bg__06: rgba(80, 91, 218, 0.2);
+  --bg__07: #4852c4;
+  --bg__08: rgba(0, 0, 0, 0.5);
+  --bg__09: rgba(220, 220, 220, 0.3);
+  --bg__10: #e8e8e8;
+  --bg__11: rgba(255, 255, 255, 0.9);
+  --bg__12: #da5050;
+  --bg__13: #c44747;
+  --bg__14: #ffffff;
+
+  --text__01: #444444;
+  --text__02: #f0f2f5;
+  --text__03: #505bda;
+  --text__04: rgba(68, 68, 68, 0.3);
+  --text__05: rgba(68, 68, 68, 0.5);
+  --text__06: rgba(68, 68, 68, 0.9);
+
+  --icono__01: #f0f2f5;
+  --icono__02: #444444;
+  --border__01: rgba(68, 68, 68, 0.3);
+  --border__02: #505bda;
+  --border__03: rgb(224, 224, 224);
+  --border__04: rgba(68, 68, 68, 0.1);
+
+  --shadow__01: rgba(0, 0, 0, 0.2);
+  --shadow__02: #505bda99;
+  --shadow__03: rgba(68, 68, 68, 0.5);
+  --shadow__04: rgba(80, 114, 218, 0.5);
+  --shadow__05: rgba(218, 80, 80, 0.5);
+
+  --violet: #b063c5;
+  --pink: #ffaac3;
+  --green: #24cca7;
+  --red: #cc2424;
+  --yellow: #e8b60f;
+}
+
+.dark {
+  --bg__01: #18181a;
+  --bg__02: rgba(68, 68, 68, 0.1);
+  --bg__11: rgba(0, 0, 0, 0.9);
+  --bg__09: rgba(220, 220, 220, 0.1);
+  --bg__14: #242526;
+  --text__01: #f0f2f5;
+  --text__04: rgba(255, 255, 255, 0.2);
+  --text__05: rgba(255, 255, 255, 0.6);
+  --text__06: rgba(255, 255, 255, 0.9);
+  --icono__01: #444444;
+  --icono__02: #f0f2f5;
+  --border__01: rgba(220, 220, 220, 0.2);
+  --border__03: rgba(220, 220, 220, 0.2);
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 10px 20px 0;
+  background: var(--bg__01);
+}
+
+a {
+  text-decoration: none;
+}

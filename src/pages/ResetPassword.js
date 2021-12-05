@@ -11,7 +11,7 @@ import MsgAlert from "../components/MsgAlert";
 import BtnRegresar from "../components/BtnRegresar";
 //---------------- STYLES ----------------
 import {
-  ContainerInicio,
+  showElement,
   Input,
   LogoIcon,
   HeaderAuth,
@@ -91,43 +91,42 @@ const ResetPassword = () => {
         <title>Olvidé mi contraseña</title>
       </Helmet>
       {auth.currentUser === null ? (
-        <ContainerInicio>
-          <ContainerBtnRegresar>
-            <BtnRegresar ruta="/login" />
-          </ContainerBtnRegresar>
-          <HeaderAuth>
-            <NavLink to="/" exact>
-              <LogoIcon
-                className="grande"
-                src={logo}
-                alt="LOGO EXMA"
-              ></LogoIcon>
-            </NavLink>
-          </HeaderAuth>
-          <form action="">
-            <h3>Olvidé mi contraseña</h3>
-            <p className="center">
-              Escribe el <b>correo electrónico</b> a recuperar y te enviaremos
-              un link para que crear una <b>nueva clave</b>.
-            </p>
-            <Input
-              type="email"
-              name="email"
-              placeholder="Correo electrónico"
-              value={correo}
-              onChange={handleChange}
+        <>
+          <ContainerResetPassword>
+            <HeaderAuth>
+              <NavLink to="/" exact>
+                <LogoIcon
+                  className="grande"
+                  src={logo}
+                  alt="LOGO EXMA"
+                ></LogoIcon>
+              </NavLink>
+            </HeaderAuth>
+            <BtnRegresar ruta="/login" titulo="Olvidé mi contraseña" />
+            <form action="">
+              <p className="center">
+                Escribe el <b>correo electrónico</b> a recuperar y te enviaremos
+                un link para que crear una <b>nueva clave</b>.
+              </p>
+              <Input
+                type="email"
+                name="email"
+                placeholder="Correo electrónico"
+                value={correo}
+                onChange={handleChange}
+              />
+              <Boton type="submit" onClick={handleSubmit}>
+                Enviar link
+              </Boton>
+            </form>
+            <MsgAlert
+              classAlert={alert.classAlert}
+              msg={alert.msg}
+              alertState={alertState}
+              changeAlertState={changeAlertState}
             />
-            <Boton type="submit" onClick={handleSubmit}>
-              Enviar link
-            </Boton>
-          </form>
-          <MsgAlert
-            classAlert={alert.classAlert}
-            msg={alert.msg}
-            alertState={alertState}
-            changeAlertState={changeAlertState}
-          />
-        </ContainerInicio>
+          </ContainerResetPassword>
+        </>
       ) : (
         <Redirect to="/gestion" />
       )}
@@ -135,9 +134,42 @@ const ResetPassword = () => {
   );
 };
 
-const ContainerBtnRegresar = styled.div`
-  width: 100%;
-  display: flex;
+const ContainerResetPassword = styled.div`
+display: flex;
+justify-content: flex-start;
+align-items: flex-start;
+flex-direction: column;
+width: 100%;
+height: 80vh;
+  animation: ${showElement} 1s ease forwards;
+
+  p {
+    color: var(--text__01);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    margin: 0 0 5px;
+    text-align: center;
+    padding: 0 20px;
+    width: 100%;
+    animation: opac 0.5s ease forwards;
+  }
+  form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+    @keyframes opac {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
 `;
 
 export default ResetPassword;

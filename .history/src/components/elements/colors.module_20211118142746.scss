@@ -1,0 +1,23 @@
+.mode__light-mode {
+  $white: #ffffff;
+  $black: #444444;
+  $darkblue: #1a2849;
+  $violetblue: #505bda;
+  $violet: #b063c5;
+  $pink: #ffaac3;
+  $green: #24cca7;
+  $red: #cc2424;
+  $yellow: #e8b60f;
+}
+
+:export {
+  white: $white;
+  black: $black;
+  darkblue: $darkblue;
+  violetblue: $violetblue;
+  violet: $violet;
+  pink: $pink;
+  green: $green;
+  red: $red;
+  yellow: $yellow;
+}

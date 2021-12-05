@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 //---------------- COMPONENTS ----------------
 import IconCategorias from "./IconCategorias";
+
+import { slideDown } from "./elements/StyledElements";
 
 const SelectCategoria = ({ categoria, changeCategoria }) => {
   // Estado para mostrar el menú de selección
   const [showSelect, changeShowSelect] = useState(false);
+
   const categorias = [
     { id: "Comida" },
     { id: "Hogar" },
@@ -25,10 +28,19 @@ const SelectCategoria = ({ categoria, changeCategoria }) => {
     changeCategoria(e.currentTarget.dataset.valor);
   };
 
+  const handleMenuOnClick = () =>
+    setTimeout(() => changeShowSelect(!showSelect), 50);
+  const handleMenuOnBlur = () => setTimeout(() => changeShowSelect(false), 50);
+
   return (
-    <ContainerSelect onClick={() => changeShowSelect(!showSelect)}>
+    <ContainerSelect
+      tabIndex="1"
+      onBlur={handleMenuOnBlur}
+      onClick={handleMenuOnClick}
+    >
       <OptionSelected>
-        {categoria}
+        <IconCategorias nombre={categoria} />
+        <p>{categoria}</p>
         <i className="fas fa-chevron-down"></i>
       </OptionSelected>
       {showSelect && (
@@ -58,16 +70,17 @@ const ContainerSelect = styled.div`
   flex-direction: column;
   position: relative;
   margin-top: 10px;
-  padding: 15px 20px;
+  padding: 11px 20px;
   width: 100%;
   border-radius: 50px;
   transition: all 0.2s ease;
-  color: #505bda;
+  color: var(--text__03);
   font-size: 14px;
   font-weight: 700;
-  background: rgba(80, 91, 218, 0.1);
+  background: var(--bg__04);
+  user-select: none;
   &:hover {
-    background: rgba(80, 91, 218, 0.2);
+    background: var(--bg__06);
   }
 `;
 
@@ -76,17 +89,13 @@ const OptionSelected = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-`;
-
-const slideDown = keyframes`
-    0%{
-      transform: translateY(-1.25rem);
-      opacity:0;
-    }
-    100%{
-      transform: translateY(1.25rem);
-      opacity:1;
-    }
+  img {
+    width: 25px;
+    height: 25px;
+  }
+  p {
+    flex: 1;
+  }
 `;
 
 const OptionsMenu = styled.div`
@@ -94,12 +103,13 @@ const OptionsMenu = styled.div`
   top: 50px;
   left: 0;
   right: 0;
-  border-radius: 30px;
-  background: #fff;
+  border-radius: 15px;
+  background: var(--bg__14);
   padding: 10px 0;
   max-height: 250px;
-  box-shadow: 0px 15px 20px rgb(0 0 0 / 20%);
+  box-shadow: 0px 15px 20px var(--shadow__01);
   overflow-y: overlay;
+  border: 1px solid var(--border__03);
   animation: ${slideDown} 0.3s ease forwards;
 
   .options-menu__list {
@@ -119,7 +129,7 @@ const OptionsMenu = styled.div`
     height: 25px;
     width: 100%;
     z-index: 1;
-    background: linear-gradient(360deg, #fff, #ffffff00);
+    background: linear-gradient(360deg, var(--bg__14), transparent);
   }
   &::after {
     content: "";
@@ -131,7 +141,7 @@ const OptionsMenu = styled.div`
     width: 100%;
     height: 25px;
     z-index: 1;
-    background: linear-gradient(180deg, #fff, #ffffff00);
+    background: linear-gradient(180deg, var(--bg__14), transparent);
   }
 `;
 
@@ -139,11 +149,11 @@ const Option = styled.div`
   display: flex;
   align-items: center;
   padding: 5px 15px;
-  border-radius: 8px;
+  border-radius: 15px;
   transition: all 0.2s ease;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--bg__09);
   }
 `;
 

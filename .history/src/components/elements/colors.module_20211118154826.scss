@@ -1,0 +1,68 @@
+$white: #ffffff;
+$black: #444444;
+$blackOpac-01: rgba(0, 0, 0, 0.1);
+$blackOpac-03: rgba(68, 68, 68, 0.2);
+$blackOpac-05: rgba(68, 68, 68, 0.5);
+$blackOpac-09: rgba(68, 68, 68, 0.9);
+$blackDm: #18181a;
+$darkblue: #1a2849;
+$violetblue: #505bda;
+$violetblueOpac-01: rgba(80, 91, 218, 0.1);
+$violetblueOpac-06: rgba(78, 90, 218, 0.6);
+$violet: #b063c5;
+$pink: #ffaac3;
+$green: #24cca7;
+$red: #cc2424;
+$yellow: #e8b60f;
+
+$bg__01: $white;
+$bg__02: $blackOpac-01;
+$bg__03: $violetblue;
+$bg__04: $violetblueOpac-01;
+$text__01: $black;
+$text__02: $white;
+$text__03: $violetblue;
+$text__04: $blackOpac-03;
+$icono__01: $white;
+$border__blackOpac_03: $blackOpac-03;
+
+// Tema principal
+.theme {
+  --bg__01: #{$bg__01};
+  --bg__02: #{$bg__02};
+  --bg__03: #{$bg__03};
+  --bg__04: #{$bg__04};
+  --text__01: #{$text__01};
+  --text__02: #{$text__02};
+  --text__03: #{$text__03};
+  --text__04: #{$text__04};
+  --icono__01: #{$icono__01};
+  --border__blackOpac_03: #{$border__blackOpac_03};
+  // Tema oscuro
+  &.--dark {
+    --bg__01: #{$bg__01};
+    --bg__02: #{$bg__02};
+    --bg__03: #{$bg__03};
+    --bg__04: #{$bg__04};
+    --text__01: #{$text__01};
+    --text__02: #{$text__02};
+    --text__03: #{$text__03};
+    --text__04: #{$text__04};
+    --icono__01: #{$icono__01};
+    --border__blackOpac_03: #{$border__blackOpac_03};
+  }
+}
+:export {
+  white: $white;
+  black: $black;
+  darkblue: $darkblue;
+  violetblue: $violetblue;
+  violetblueOpac__01: $violetblueOpac-01;
+  violetblueOpac__06: $violetblueOpac-06;
+  violet: $violet;
+  pink: $pink;
+  green: $green;
+  red: $red;
+  yellow: $yellow;
+  blackDm: $blackDm;
+}

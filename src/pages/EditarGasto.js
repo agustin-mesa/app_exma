@@ -27,7 +27,7 @@ const EditarGasto = () => {
 
 const ContainerEditarGasto = styled.div`
   h3 {
-    color: #505bda;
+    color: var(--text__03);
     font-size: 1.5em;
     font-weight: 700;
     text-align: center;

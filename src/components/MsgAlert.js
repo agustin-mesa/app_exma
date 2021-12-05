@@ -29,8 +29,8 @@ const MsgAlert = ({ classAlert, msg, alertState, changeAlertState }) => {
 
 const slideDown = keyframes`
     0%{
-            transform: translateY(-1.25rem);
-            opacity:0;
+        transform: translateY(-1.25rem);
+        opacity:0;
     }
     10%{
         transform: translateY(1.25rem);
@@ -47,11 +47,11 @@ const slideDown = keyframes`
 `;
 
 const ContainerAlert = styled.div`
-  z-index: 1000;
+  position: fixed;
   width: 100%;
   left: 0;
   top: 1.25rem;
-  position: fixed;
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,19 +59,19 @@ const ContainerAlert = styled.div`
 
   p {
     background: ${(props) => {
-      if (props.classAlert === "error") return "#CC2424";
-      else if (props.classAlert === "exito") return "#24CCA7";
-      else if (props.classAlert === "alerta") return "#E8B60F";
+      if (props.classAlert === "error") return "var(--red)";
+      else if (props.classAlert === "exito") return "var(--green)";
+      else if (props.classAlert === "alerta") return "var(--yellow)";
       else return "#000";
     }};
     padding: 15px 20px;
-    color: #ffffff;
+    color: var(--text__02);
     font-size: 14px;
     font-weight: 600;
     line-height: 25px;
     text-align: center;
     border-radius: 20px;
-    box-shadow: 0px 8px 16px rgba(68, 68, 68, 0.3);
+    box-shadow: 0px 8px 16px var(--shadow__03);
     margin: 0 20px;
   }
 `;
